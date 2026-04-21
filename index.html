@@ -1,0 +1,2246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindaugas Maciulis — Workforce Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --navy: #050D12;
+    --navy-mid: #081018;
+    --navy-card: #0C1820;
+    --navy-hover: #102030;
+    --mint: #3CF5CB;
+    --mint-mid: #1FD4A8;
+    --mint-dark: #0FAD88;
+    --teal: #0ABFA0;
+    
+    
+    --white: #F0FBF8;
+    --white-dim: rgba(240,251,248,0.65);
+    --white-muted: rgba(240,251,248,0.38);
+    --white-ghost: rgba(240,251,248,0.07);
+    --white-line: rgba(240,251,248,0.09);
+    --font-head: 'Outfit', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    --max: 1200px;
+    --gutter: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── UTILITY ── */
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mint);
+  }
+  .rule { width: 40px; height: 2px; background: var(--mint); margin-bottom: 1.5rem; }
+
+  /* ── NAV ── */
+  #mainNav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9999;
+    height: 62px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    background: rgba(5,13,18,0);
+    transition: background 0.45s ease, box-shadow 0.45s ease;
+  }
+  #mainNav.scrolled {
+    background: rgba(5,13,18,0.95);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 1px 0 rgba(240,251,248,0.07);
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .nav-logo-img {
+    height: 30px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+  }
+  .footer-logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+  .nav-center {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+  .nav-center a {
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(240,251,248,0.68);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-center a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.07);
+  }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--teal);
+    color: #fff !important;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.48rem 1.1rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--mint-dark); transform: translateY(-1px); }
+  /* mobile */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10rem var(--gutter) 5rem;
+    position: relative;
+    overflow: hidden;
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776204369/15_wgsjbm.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(60,245,203,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(60,245,203,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.6;
+  }
+  .hero-blob {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(ellipse at 60% 40%, rgba(60,245,203,0.22) 0%, rgba(60,245,203,0.08) 45%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-blob-2 {
+    position: absolute;
+    bottom: -15%;
+    left: -5%;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(ellipse, rgba(12,25,60,0.8) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 780px; margin: 0; width: 100%; }
+  .hero-eyebrow { margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1.5px;
+    background: var(--mint);
+  }
+  .hero-h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.2rem, 3.6vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: none;
+    margin-bottom: 2rem;
+  }
+  .hero-h1 em { font-style: normal; color: var(--mint); font-weight: 500; }
+  .hero-sub {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    color: var(--white-dim);
+    max-width: 56ch;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 4rem; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--mint);
+    color: var(--navy);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0.85rem 1.75rem;
+    border-radius: 3px;
+    transition: background 0.25s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--mint-mid); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--white-dim);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    padding: 0.85rem 1.75rem;
+    border-radius: 3px;
+    border: 1px solid var(--white-line);
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--white-dim); color: var(--white); }
+  .hero-quote {
+    border-left: 2px solid var(--mint);
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: var(--white-muted);
+    font-size: 13px;
+    max-width: 50ch;
+    line-height: 1.6;
+  }
+
+  /* ── LOGO STRIP ── */
+  .logo-strip {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--white-line);
+    border-bottom: 1px solid var(--white-line);
+    padding: 2rem var(--gutter);
+  }
+  .logo-strip-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .logo-strip-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--white-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-right: 2.5rem;
+    margin-right: 2.5rem;
+    border-right: 1px solid var(--white-line);
+    line-height: 1.5;
+  }
+  .logo-strip-logos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(2rem, 5vw, 4rem);
+    flex: 1;
+    flex-wrap: nowrap;
+  }
+  .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    flex-shrink: 0;
+  }
+  .logo-item:hover { opacity: 0.85; transform: scale(1.04); transition: transform 0.2s; }
+  .logo-item img {
+    display: block;
+    height: 47px;
+    width: auto;
+    max-width: 186px;
+    object-fit: contain;
+    filter: none;
+  }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: clamp(4rem, 8vw, 8rem) var(--gutter); }
+  .section-inner { max-width: var(--max); margin: 0 auto; }
+  .section-header { margin-bottom: 4rem; }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-top: 0.75rem;
+  }
+  .section-title em { font-style: normal; color: var(--mint); font-weight: 500; }
+
+  /* ── CREDIBILITY ── */
+  #credibility { background: var(--navy-mid); }
+  .cred-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5px;
+    background: var(--white-line);
+    border: 1.5px solid var(--white-line);
+  }
+  .cred-card {
+    background: var(--navy-card);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+  }
+  .cred-card:hover { background: var(--navy-hover); }
+  .cred-num {
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+  .cred-num img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    display: block;
+  }
+  .cred-title {
+    font-family: var(--font-head);
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--white);
+  }
+  .cred-body { font-size: 13.5px; color: var(--white-dim); line-height: 1.65; }
+  .cred-tag {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mint);
+    border: 1px solid rgba(60,245,203,0.25);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  /* ── STATS ── */
+  #stats {
+    background: #FFFFFF;
+    color: #0A1510;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+  #stats .section-inner {
+    padding: 0 var(--gutter);
+    padding-top: clamp(4rem, 8vw, 8rem);
+  }
+  #stats .label { color: var(--mint-dark); }
+  #stats .rule { background: var(--mint-dark); }
+  #stats .section-title { color: #060F0A; }
+  #stats .section-title em { color: var(--teal); }
+  .stats-intro {
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    color: #3D524A;
+    max-width: 62ch;
+    line-height: 1.75;
+    margin-top: 0;
+    font-weight: 400;
+  }
+  #stats .section-header { margin-bottom: 1rem; }
+  .stats-top-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding-bottom: 0.5rem;
+  }
+  .stats-top-left { display: flex; flex-direction: column; }
+  .stats-top-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stats-diagram-img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+  @media (max-width: 760px) {
+    .stats-top-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-diagram-img { max-width: 100%; }
+  }
+  /* ── Single-row stat strip ── */
+  .stats-row-outer {
+    margin-top: 3.5rem;
+    position: relative;
+    border-top: 1.5px solid #E0EAE5;
+    overflow: hidden;
+  }
+  .stats-row-outer::after { display: none; }
+  .stats-row {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+  }
+  .stats-row:active { cursor: grabbing; }
+  .stats-row::-webkit-scrollbar { display: none; }
+  /* Cards */
+  .stat-card {
+    flex: 1 0 0;
+    min-width: 220px;
+    padding: 2.75rem 2rem 2.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-right: 1.5px solid #E0EAE5;
+    border-bottom: 1.5px solid #E0EAE5;
+    position: relative;
+    scroll-snap-align: start;
+    background: #fff;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.2s;
+  }
+  .stat-card:last-child { border-right: none; }
+  .stat-card.counted { opacity: 1; transform: translateX(0); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--mint);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .stat-card:hover { background: #F5FBF8; }
+  .stat-card:hover::before { transform: scaleX(1); }
+  .stat-pct {
+    font-family: var(--font-head);
+    font-size: clamp(2.8rem, 3.8vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1;
+    color: #060F0A;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+  }
+  .stat-pct-suffix {
+    font-size: 0.5em;
+    font-weight: 700;
+    color: var(--teal);
+    vertical-align: super;
+    line-height: 0;
+  }
+  .stat-divider {
+    width: 24px;
+    height: 2px;
+    background: var(--mint-dark);
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+  .stat-desc {
+    font-size: 12.5px;
+    color: #3D524A;
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 1.25rem;
+  }
+  .stat-source {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(10,21,16,0.3);
+    padding-top: 0.75rem;
+    border-top: 1px solid #E0EAE5;
+  }
+  /* Quote block */
+  .stats-quote {
+    margin: 0;
+    padding: 2.5rem var(--gutter);
+    border-top: 1.5px solid #E0EAE5;
+    background: #F5FBF8;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .stats-quote-bar {
+    width: 3px;
+    height: 60px;
+    background: var(--teal);
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+  .stats-quote p {
+    font-family: var(--font-head);
+    font-size: clamp(1rem, 1.8vw, 1.35rem);
+    font-weight: 600;
+    line-height: 1.45;
+    color: #060F0A;
+    flex: 1;
+    min-width: 200px;
+  }
+  .stats-quote cite {
+    font-size: 12px;
+    color: var(--teal);
+    font-style: normal;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── PROBLEM ── */
+  #problem {
+    background-color: #050D12;
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776175403/3d2f0e5c72b22b857c0d18969473b00b_LE_upscale_prime_1_pwtpnc.png');
+    background-size: cover;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+  }
+  #problem::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(5,13,18,0.88) 0%, rgba(5,13,18,0.55) 55%, rgba(5,13,18,0.15) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  #problem .section-inner { position: relative; z-index: 1; }
+  .problem-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .problem-lead {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    color: var(--white-dim);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-top: 1.5rem;
+  }
+  /* Accordion */
+  .accordion { display: flex; flex-direction: column; gap: 0; margin-top: 2rem; border: 1px solid var(--white-line); }
+  .acc-item { border-bottom: 1px solid var(--white-line); }
+  .acc-item:last-child { border-bottom: none; }
+  .acc-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.4rem 1.5rem;
+    text-align: left;
+    transition: background 0.2s;
+  }
+  .acc-trigger:hover { background: var(--navy-card); }
+  .acc-trigger.open { background: var(--navy-card); }
+  .acc-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: rgba(60,245,203,0.08);
+    border: 1px solid rgba(60,245,203,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .acc-trigger.open .acc-icon { background: rgba(60,245,203,0.15); border-color: rgba(60,245,203,0.4); }
+  .acc-icon svg { width: 16px; height: 16px; fill: none; stroke: var(--mint); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .acc-label {
+    flex: 1;
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--white);
+  }
+  .acc-chevron {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    fill: none;
+    stroke: var(--white-muted);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .acc-trigger.open .acc-chevron { transform: rotate(180deg); stroke: var(--mint); }
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 1.5rem 0 calc(1.5rem + 36px + 1rem);
+  }
+  .acc-body.open {
+    max-height: 200px;
+    padding: 0 1.5rem 1.4rem calc(1.5rem + 36px + 1rem);
+  }
+  .acc-body p { font-size: 14px; color: var(--white-dim); line-height: 1.65; }
+
+  /* ── SOLUTION ── */
+  #solution {
+    background-color: #F4F8F6;
+    background-image:
+      linear-gradient(rgba(10,191,160,0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,191,160,0.09) 1px, transparent 1px);
+    background-size: 48px 48px;
+    overflow: hidden;
+    position: relative;
+  }
+  #solution .label { color: var(--mint-dark); }
+  #solution .rule { background: var(--mint-dark); }
+  #solution .section-title { color: #060F0A; }
+  #solution .section-title em { color: var(--teal); font-weight: 500; }
+  #solution .solution-intro { color: #3D524A; }
+  .solution-intro {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    color: var(--white-dim);
+    max-width: 68ch;
+    line-height: 1.75;
+    font-weight: 300;
+    margin-top: 0.25rem;
+  }
+  #solution .section-header { margin-bottom: 0.75rem; }
+  /* Magazine-style expanding card row */
+  .disciplines {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 540px;
+    margin-top: 3rem;
+    gap: 3px;
+    overflow: hidden;
+  }
+  .discipline {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 0.55s cubic-bezier(0.4,0,0.2,1);
+  }
+  .disciplines:hover .discipline { flex: 0.6; }
+  .disciplines:hover .discipline:hover { flex: 2.8; }
+  /* Layered bg with unique tinted overlays per card */
+  .discipline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    transition: opacity 0.55s ease;
+  }
+  .discipline:nth-child(1)::before { background: linear-gradient(160deg, rgba(5,13,18,0.55) 0%, rgba(10,191,160,0.18) 100%); }
+  .discipline:nth-child(2)::before { background: linear-gradient(160deg, rgba(5,13,18,0.65) 0%, rgba(28,78,130,0.25) 100%); }
+  .discipline:nth-child(3)::before { background: linear-gradient(160deg, rgba(5,13,18,0.55) 0%, rgba(60,245,203,0.15) 100%); }
+  .discipline:nth-child(4)::before { background: linear-gradient(160deg, rgba(5,13,18,0.6) 0%, rgba(15,173,136,0.2) 100%); }
+  /* Bottom fade for text readability */
+  .discipline::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 75%;
+    background: linear-gradient(to top, rgba(5,13,18,0.97) 0%, rgba(5,13,18,0.6) 50%, transparent 100%);
+    z-index: 2;
+    transition: height 0.55s ease;
+  }
+  /* Textured bg pattern per card */
+  .disc-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  }
+  .discipline:nth-child(1) .disc-bg {
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776206061/IMG-20240327-WA0022_LE_auto_x2_1_h0trhd.png');
+    background-size: cover;
+    background-position: center center;
+  }
+  .discipline:nth-child(2) .disc-bg {
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776206097/ca1a09cf4bb1b9b0a0af1ae667950bc6_1_smr5as.png');
+    background-size: cover;
+    background-position: center center;
+  }
+  .discipline:nth-child(3) .disc-bg {
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776206100/gemini-image-2_make_this_man_at_desk_discussing_with_team-0_1_r1jvtz.png');
+    background-size: cover;
+    background-position: center center;
+  }
+  .discipline:nth-child(4) .disc-bg {
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776206099/e233458fe8ef659d26c1f356cf13a74d_1_bvu3iw.png');
+    background-size: cover;
+    background-position: center center;
+  }
+  .disciplines:hover .discipline:hover .disc-bg { transform: scale(1.04); }
+  /* Card content */
+  .disc-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 3;
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .disc-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .disc-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1.5px;
+    background: var(--mint);
+    flex-shrink: 0;
+  }
+  .disc-title {
+    font-family: var(--font-head);
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 0;
+    transition: margin-bottom 0.4s ease;
+  }
+  /* Revealed on hover */
+  .disc-reveal {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease 0.1s, margin-top 0.4s ease;
+    margin-top: 0;
+  }
+  .disciplines:hover .discipline:hover .disc-reveal {
+    max-height: 220px;
+    opacity: 1;
+    margin-top: 1rem;
+  }
+  .disc-body-text {
+    font-size: 13.5px;
+    color: var(--white-dim);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+  .disc-output-tag {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: rgba(60,245,203,0.08);
+    border-left: 2px solid var(--mint);
+    font-size: 12px;
+    color: var(--mint);
+    line-height: 1.5;
+  }
+  .disc-output-tag strong {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: block;
+    opacity: 0.65;
+    margin-bottom: 2px;
+    color: var(--mint);
+  }
+  /* Card number watermark */
+  .disc-watermark {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 3;
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 800;
+    color: rgba(60,245,203,0.25);
+    letter-spacing: 0.05em;
+    transition: opacity 0.3s;
+  }
+  /* Icon top-left */
+  .disc-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.75rem;
+    z-index: 3;
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    background: rgba(60,245,203,0.1);
+    border: 1px solid rgba(60,245,203,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .disciplines:hover .discipline:hover .disc-icon {
+    background: rgba(60,245,203,0.18);
+    border-color: rgba(60,245,203,0.5);
+  }
+  .disc-icon svg { width: 17px; height: 17px; fill: none; stroke: var(--mint); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ── SPEAKING ── */
+  #speaking { background: var(--navy-mid); overflow: hidden; }
+  #speaking .section-header { margin-bottom: 0.75rem; }
+  .speaking-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .speaking-intro {
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    color: var(--white-dim);
+    max-width: 58ch;
+    line-height: 1.75;
+    font-weight: 300;
+    margin-top: 0.25rem;
+  }
+  /* Carousel wrapper — bleeds past container */
+  .carousel-outer {
+    position: relative;
+    margin-left: calc(-1 * var(--gutter));
+    margin-right: calc(-1 * var(--gutter));
+    padding-left: var(--gutter);
+    overflow: hidden;
+  }
+  .carousel-track {
+    display: flex;
+    gap: 16px;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    padding-right: var(--gutter);
+  }
+  /* Each card */
+  .keynote-card {
+    flex: 0 0 calc(70vw - var(--gutter));
+    max-width: 820px;
+    min-width: 300px;
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--navy-card);
+  }
+  /* Image layer — swap src to add real image */
+  .kc-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .keynote-card:hover .kc-image { transform: scale(1.04); }
+  /* Dark gradient overlay */
+  .kc-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,13,18,0.97) 0%, rgba(5,13,18,0.55) 45%, rgba(5,13,18,0.2) 100%);
+    z-index: 1;
+  }
+  /* Subtle pattern on cards without images */
+  .kc-pattern {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.6;
+    transition: opacity 0.4s;
+  }
+  /* Top meta */
+  .kc-top {
+    position: absolute;
+    top: 1.75rem;
+    left: 1.75rem;
+    right: 1.75rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .kc-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--mint);
+    color: var(--navy);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+  .kc-num {
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(60,245,203,0.4);
+    letter-spacing: 0.06em;
+  }
+  /* Bottom content */
+  .kc-body {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    z-index: 3;
+    padding: 2rem 1.75rem;
+  }
+  .kc-cat {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mint);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .kc-cat::before { content: ''; display: block; width: 18px; height: 1.5px; background: var(--mint); }
+  .kc-title {
+    font-family: var(--font-head);
+    font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
+  }
+  .kc-desc {
+    font-size: 13.5px;
+    color: var(--white-dim);
+    line-height: 1.65;
+    max-width: 56ch;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .kc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mint);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .kc-link:hover { gap: 0.8rem; }
+  /* Controls */
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  .carousel-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--white-line);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+    color: var(--white-dim);
+  }
+  .carousel-btn:hover { border-color: var(--mint); background: rgba(60,245,203,0.08); color: var(--mint); }
+  .carousel-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  /* Progress dots */
+  .carousel-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-left: var(--gutter);
+  }
+  .carousel-dot {
+    width: 24px;
+    height: 2px;
+    background: var(--white-muted);
+    border-radius: 2px;
+    transition: background 0.3s, width 0.3s;
+    cursor: pointer;
+  }
+  .carousel-dot.active { background: var(--mint); width: 40px; }
+  .speaking-cta { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* ── ADVISORY ── */
+  #advisory {
+    background: #F7FAF9;
+    color: #060F0A;
+    position: relative;
+  }
+  #advisory::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(10,191,160,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,191,160,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  #advisory .section-inner { position: relative; z-index: 1; }
+  #advisory .label { color: var(--mint-dark); }
+  #advisory .rule { background: var(--mint-dark); }
+  #advisory .section-title { color: #060F0A; }
+  #advisory .section-title em { color: var(--teal); }
+  .advisory-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .advisory-sticky { position: sticky; top: 7rem; }
+  .advisory-lead {
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    color: #3D524A;
+    line-height: 1.75;
+    font-weight: 400;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  #advisory .btn-primary {
+    background: var(--teal);
+    color: #fff;
+  }
+  #advisory .btn-primary:hover { background: var(--mint-dark); }
+  .services {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+    background: #D8E8E2;
+    border: 1.5px solid #D8E8E2;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .service {
+    background: #fff;
+    padding: 2.25rem 2rem;
+    transition: background 0.25s;
+  }
+  .service:hover { background: #EEF8F4; }
+  .service-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(10,191,160,0.1);
+    border: 1px solid rgba(10,191,160,0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .service-icon svg { width: 16px; height: 16px; fill: none; stroke: var(--teal); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .service h3 {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: #060F0A;
+  }
+  .service p { font-size: 14px; color: #3D524A; line-height: 1.6; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--navy-mid); }
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-photo {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .about-photo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+  .about-bio {
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    color: var(--white-dim);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  /* Credentials marquee */
+  .credentials {
+    overflow: hidden;
+    margin-top: 2.5rem;
+    position: relative;
+  }
+  .credentials::before,
+  .credentials::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .credentials::before { left: 0; background: linear-gradient(to right, var(--navy-mid), transparent); }
+  .credentials::after  { right: 0; background: linear-gradient(to left, var(--navy-mid), transparent); }
+  .credentials-track {
+    display: flex;
+    gap: 0.75rem;
+    width: max-content;
+    animation: credScroll 28s linear infinite;
+  }
+  .credentials:hover .credentials-track { animation-play-state: paused; }
+  @keyframes credScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .cred-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1.4rem;
+    border: 1px solid rgba(60,245,203,0.2);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--white-dim);
+    background: var(--navy-card);
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .cred-item:hover { background: rgba(60,245,203,0.1); border-color: rgba(60,245,203,0.45); color: var(--white); }
+  .cred-dash { color: var(--mint); font-size: 15px; flex-shrink: 0; }
+  /* ── QUOTE BANNER ── */
+  .quote-banner-wrap {
+    padding: 0 var(--gutter);
+    background: var(--navy);
+  }
+  .quote-banner {
+    position: relative;
+    max-width: var(--max);
+    margin: 0 auto;
+    min-height: 620px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+  .quote-banner-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776191284/Slide_16_9_-_1_lgqybh.png');
+    background-size: cover;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    transition: transform 0.8s ease;
+    z-index: 0;
+  }
+  .quote-banner:hover .quote-banner-bg { transform: scale(1.02); }
+  .quote-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,13,18,0.92) 0%, rgba(5,13,18,0.55) 55%, rgba(5,13,18,0.2) 100%);
+    z-index: 1;
+  }
+  .quote-banner-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 680px;
+    padding: clamp(2.5rem, 5vw, 4rem);
+    text-align: left;
+    align-self: center;
+  }
+  .quote-banner-content p {
+    font-family: var(--font-head);
+    font-size: clamp(1.15rem, 2vw, 1.6rem);
+    font-weight: 300;
+    font-style: italic;
+
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.01em;
+  }
+  /* Each word is a span that transitions from gray to white */
+  .qword {
+    display: inline;
+    color: rgba(255,255,255,0.22);
+    transition: color 0.7s ease;
+  }
+  .qword.lit { color: rgba(255,255,255,1); }
+  .qword.teal.lit { color: var(--teal); }
+  .quote-banner-content cite {
+    font-size: 11px;
+    font-style: normal;
+    color: var(--mint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .quote-banner-content cite.lit { opacity: 1; }
+  .quote-banner-content cite::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--mint);
+    flex-shrink: 0;
+  }
+
+  .about-quote {
+    margin-top: 2.5rem;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .about-quote-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776191284/Slide_16_9_-_1_lgqybh.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    z-index: 0;
+    transition: transform 0.6s ease;
+  }
+  .about-quote:hover .about-quote-bg { transform: scale(1.03); }
+  .about-quote-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,13,18,0.95) 0%, rgba(5,13,18,0.6) 50%, rgba(5,13,18,0.15) 100%);
+    z-index: 1;
+  }
+  .about-quote-content {
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem;
+  }
+  .about-quote p {
+    font-family: var(--font-head);
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    font-weight: 600;
+    font-style: normal;
+    color: var(--white);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .about-quote cite {
+    font-size: 12px;
+    color: var(--mint);
+    font-style: normal;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* ── LEAD MAGNET ── */
+  #leadmagnet {
+    background: var(--mint);
+    padding: clamp(4rem, 8vw, 7rem) var(--gutter);
+  }
+  .leadmagnet-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .lm-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(60,245,203,0.35);
+    color: rgba(60,245,203,0.8);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 1.25rem;
+  }
+  .lm-h2 {
+    font-family: var(--font-head);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 1.25rem;
+  }
+  .lm-sub {
+    font-size: 1rem;
+    color: rgba(248,249,252,0.75);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+  }
+  .lm-note { font-size: 12px; color: rgba(248,249,252,0.5); }
+  .lm-form { display: flex; flex-direction: column; gap: 1rem; }
+  .lm-field {
+    background: rgba(5,13,18,0.3);
+    border: 1px solid rgba(60,245,203,0.3);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 15px;
+    padding: 0.9rem 1.25rem;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+  .lm-field::placeholder { color: rgba(240,251,248,0.45); }
+  .lm-field:focus { border-color: var(--mint); background: rgba(5,13,18,0.5); }
+  .btn-white {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+    color: var(--mint);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.9rem 2rem;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn-white:hover { opacity: 0.92; transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid var(--white-line);
+    padding: 3rem var(--gutter);
+  }
+  .footer-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .footer-logo {
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--mint); }
+  .footer-tagline { font-size: 12px; color: var(--white-muted); margin-top: 4px; }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 13px; color: var(--white-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 12px; color: var(--white-muted); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up-d1 { transition-delay: 0.1s; }
+  .fade-up-d2 { transition-delay: 0.2s; }
+  .fade-up-d3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .problem-layout,
+    .advisory-layout,
+    .about-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .disciplines { flex-direction: column; height: auto; }
+    .discipline { min-height: 240px; flex: none !important; }
+    .disc-reveal { max-height: none !important; opacity: 1 !important; margin-top: 1rem !important; }
+    .leadmagnet-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .keynote-card { flex: 0 0 85vw; height: 360px; }
+    .advisory-sticky { position: static; }
+    .about-photo { max-width: 320px; }
+  }
+  @media (max-width: 640px) {
+    .nav-center { display: none; }
+    .nav-center.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--navy);
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      z-index: 9998;
+    }
+    .nav-center.open a { font-size: 1.4rem; color: var(--white); }
+    .nav-cta { display: none; }
+    .nav-toggle { display: flex; z-index: 9999; }
+    .keynote-card { flex: 0 0 90vw; height: 320px; }
+    .cred-grid { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .logo-strip-inner { flex-wrap: wrap; gap: 1.5rem; }
+    .logo-strip-label { border-right: none; padding-right: 0; margin-right: 0; border-bottom: 1px solid var(--white-line); padding-bottom: 1rem; width: 100%; }
+    .logo-strip-logos { flex-wrap: wrap; gap: 1.5rem 2rem; justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776201101/mindagaslogo_lvf5fo.png" alt="Mindaugas Maciulis" class="nav-logo-img">
+  </a>
+  <div class="nav-center" id="navCenter">
+    <a href="#credibility">About</a>
+    <a href="#problem">The Problem</a>
+    <a href="#solution">The Model</a>
+    <a href="#speaking">Speaking</a>
+    <a href="#advisory">Advisory</a>
+  </div>
+  <a href="#leadmagnet" class="nav-cta">Contact ↗</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="label">Workforce Architect</span>
+    </div>
+    <h1 class="hero-h1">Your AI Strategy Is Building the <em>Leadership Crisis</em> It Was Supposed to Prevent</h1>
+    <p class="hero-sub">When AI absorbs the work that trained your next generation of leaders, efficiency goes up and resilience goes down. The organizations that win the next decade won't be the ones that deployed the most AI. They'll be the ones that preserved the leadership depth to use it.</p>
+    <div class="hero-ctas">
+      <a href="#leadmagnet" class="btn-primary">Request an Executive Briefing &rarr;</a>
+      <a href="#speaking" class="btn-secondary">Book a Keynote</a>
+      <a href="#" class="btn-secondary">Pre-order the Book</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- LOGO STRIP -->
+<div class="logo-strip">
+  <div class="logo-strip-inner">
+    <span class="logo-strip-label">As seen in &amp; affiliated with</span>
+    <div class="logo-strip-logos">
+      <div class="logo-item">
+        <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776174739/9_dur1zo.png" alt="Partner logo" loading="lazy">
+      </div>
+      <div class="logo-item">
+        <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776174739/10_illto7.png" alt="Partner logo" loading="lazy">
+      </div>
+      <div class="logo-item">
+        <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776174732/7_aodn3v.png" alt="Partner logo" loading="lazy">
+      </div>
+      <div class="logo-item">
+        <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776174732/8_drl3ji.png" alt="Partner logo" loading="lazy">
+      </div>
+      <div class="logo-item">
+        <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776174732/6_cayhp1.png" alt="Partner logo" loading="lazy">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREDIBILITY -->
+<section id="credibility">
+  <div class="section-inner">
+    <div class="section-header fade-up" style="text-align:center;display:flex;flex-direction:column;align-items:center;">
+      <span class="label">Built from firsthand experience. Not theory.</span>
+      <div class="rule"></div>
+      <h2 class="section-title">Intellectual & Operational<br><em>Credibility</em></h2>
+    </div>
+    <div class="cred-grid">
+      <div class="cred-card fade-up fade-up-d1">
+        <div class="cred-num"><img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776202137/mmm_z4ssjw.png" alt=""></div>
+        <h3 class="cred-title">Intellectual Framework</h3>
+        <p class="cred-body">Creator of The Hollow Organization™ — the structural argument that AI efficiency gains, without intentional workforce architecture redesign, erode the leadership depth that drives long-term competitive advantage.</p>
+        <span class="cred-tag">The Hollow Organization™</span>
+      </div>
+      <div class="cred-card fade-up fade-up-d2">
+        <div class="cred-num"><img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776202137/mmm_z4ssjw.png" alt=""></div>
+        <h3 class="cred-title">Published Author</h3>
+        <p class="cred-body">Co-author, <em>Human First in the AI World</em> — a practical and philosophical case for keeping human development — not automation — at the center of organizational strategy.</p>
+        <span class="cred-tag">Co-Author</span>
+      </div>
+      <div class="cred-card fade-up fade-up-d1">
+        <div class="cred-num"><img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776202137/mmm_z4ssjw.png" alt=""></div>
+        <h3 class="cred-title">Operational Credibility</h3>
+        <p class="cred-body">Hands-on leadership at Kohler and DHL Supply Chain. Led organizations through rapid growth and severe stress — including a business crisis that brought him within one week of payroll failure. The origin of everything he teaches.</p>
+        <span class="cred-tag">Kohler · DHL</span>
+      </div>
+      <div class="cred-card fade-up fade-up-d2">
+        <div class="cred-num"><img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776202137/mmm_z4ssjw.png" alt=""></div>
+        <h3 class="cred-title">Proprietary Diagnostic Tools</h3>
+        <p class="cred-body">AI Fragility Index™ and Elevation Workforce™ Model — quantitative diagnostic tools used by enterprise leadership teams to measure structural risk and benchmark leadership density against competitive peers.</p>
+        <span class="cred-tag">AI Fragility Index™</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="section-inner">
+    <div class="stats-top-layout">
+      <div class="stats-top-left fade-up">
+        <div class="section-header">
+          <span class="label">The Structural Case — In Numbers</span>
+          <div class="rule"></div>
+          <h2 class="section-title">This Is Not a Talent Problem.<br><em>It's a Structural One.</em></h2>
+        </div>
+        <p class="stats-intro">Leadership pipelines are eroding. Trust is collapsing. AI adoption is stalling. And the organizations responsible are the ones that optimized hardest, fastest — without redesigning the architecture underneath.</p>
+      </div>
+      <div class="stats-top-right fade-up fade-up-d2">
+        <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776202638/Group_1000001017_lqeodu.png" alt="AI Structural Risk Diagram" class="stats-diagram-img">
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row-outer fade-up">
+    <div class="stats-row" id="statsRow">
+
+      <div class="stat-card" data-target="77">
+        <span class="stat-pct"><span class="count">0</span><span class="stat-pct-suffix">%</span></span>
+        <div class="stat-divider"></div>
+        <p class="stat-desc">of organizations lack sufficient leadership depth across all levels — the pipeline is already thinner than most boards realize.</p>
+        <span class="stat-source">Leadership Development Statistics, 2025</span>
+      </div>
+
+      <div class="stat-card" data-target="50">
+        <span class="stat-pct"><span class="count">0</span><span class="stat-pct-suffix">%</span></span>
+        <div class="stat-divider"></div>
+        <p class="stat-desc">decline in new-hire starts for people with less than one year of experience since 2019. The apprenticeship layer is disappearing.</p>
+        <span class="stat-source">SignalFire Research, 2025</span>
+      </div>
+
+      <div class="stat-card" data-target="40">
+        <span class="stat-pct"><span class="count">0</span><span class="stat-pct-suffix">%</span></span>
+        <div class="stat-divider"></div>
+        <p class="stat-desc">of employers expect to reduce their workforce in areas where AI can automate tasks.</p>
+        <span class="stat-source">World Economic Forum, Future of Jobs 2025</span>
+      </div>
+
+      <div class="stat-card" data-target="54">
+        <span class="stat-pct"><span class="count">0</span><span class="stat-pct-suffix">%</span></span>
+        <div class="stat-divider"></div>
+        <p class="stat-desc">of organizations have not integrated workforce planning into their AI roadmaps — flying blind on structural risk.</p>
+        <span class="stat-source">WEF Global C-Suite Survey, 2025</span>
+      </div>
+
+      <div class="stat-card" data-target="29">
+        <span class="stat-pct"><span class="count">0</span><span class="stat-pct-suffix">%</span></span>
+        <div class="stat-divider"></div>
+        <p class="stat-desc">Trust in managers today — collapsed from 46% in 2022. A trust recession inside the organizations AI is supposed to improve.</p>
+        <span class="stat-source">Gallup, 2024</span>
+      </div>
+
+      <div class="stat-card" data-target="42">
+        <span class="stat-pct"><span class="count">0</span><span class="stat-pct-suffix">%</span></span>
+        <div class="stat-divider"></div>
+        <p class="stat-desc">of companies abandoned most AI initiatives in 2025 — up from 17% in 2024. Adoption without architecture doesn't hold.</p>
+        <span class="stat-source">AI Statistics Roundup, 2025</span>
+      </div>
+
+      <div class="stat-card" data-target="37">
+        <span class="stat-pct"><span class="count">0</span><span class="stat-pct-suffix">%</span></span>
+        <div class="stat-divider"></div>
+        <p class="stat-desc">of employees already fear that overreliance on AI is eroding their professional skills and expertise.</p>
+        <span class="stat-source">EY Work Reimagined Survey, 2025</span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-inner">
+    <div class="problem-layout">
+      <div class="fade-up">
+        <span class="label">The Hidden Risk of AI Efficiency</span>
+        <div class="rule"></div>
+        <h2 class="section-title">Every Organization<br>Is Building It.<br><em>Almost None Can See It.</em></h2>
+        <p class="problem-lead">When AI absorbs entry-level and mid-level work — the tasks that once trained your next generation of leaders — it compresses the apprenticeship layer that produces leadership depth.</p>
+      </div>
+      <div class="fade-up fade-up-d2">
+        <div class="accordion" id="problemAccordion">
+
+          <div class="acc-item">
+            <button class="acc-trigger" onclick="toggleAcc(this)">
+              <span class="acc-icon">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="23" y2="12"/><line x1="23" y1="8" x2="19" y2="12"/></svg>
+              </span>
+              <span class="acc-label">Entry-Level Compression</span>
+              <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="acc-body">
+              <p>Fewer developmental roles means fewer paths to leadership. The pipeline narrows silently while headcount metrics look healthy.</p>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-trigger" onclick="toggleAcc(this)">
+              <span class="acc-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </span>
+              <span class="acc-label">Apprenticeship Collapse</span>
+              <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="acc-body">
+              <p>Institutional knowledge stops flowing to the next generation. Mentorship disappears alongside the roles that enabled it.</p>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-trigger" onclick="toggleAcc(this)">
+              <span class="acc-icon">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+              </span>
+              <span class="acc-label">Leadership Density Decline</span>
+              <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="acc-body">
+              <p>The bench narrows as the pipeline quietly empties. High performers carry more. Resilience erodes. Single points of failure multiply.</p>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-trigger" onclick="toggleAcc(this)">
+              <span class="acc-icon">
+                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </span>
+              <span class="acc-label">Structural Fragility</span>
+              <svg class="acc-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="acc-body">
+              <p>High efficiency on the surface, low resilience underneath. The organization can't navigate what comes next — and the pipeline that would have fixed it no longer exists.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="label">The Solution</span>
+      <div class="rule"></div>
+      <h2 class="section-title">The Elevation Workforce™ Model<br><em>The Architecture for What Comes Next.</em></h2>
+    </div>
+    <p class="solution-intro fade-up">Elevation is not a retention strategy. It is not an HR initiative. It is a structural redesign of how organizations develop the leadership capacity they need to compete in the AI era — operating across four disciplines.</p>
+    <div class="disciplines fade-up" style="margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter));">
+
+      <div class="discipline">
+        <div class="disc-bg"></div>
+        <div class="disc-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <span class="disc-watermark">01</span>
+        <div class="disc-content">
+          <span class="disc-eyebrow">Discipline One</span>
+          <h3 class="disc-title">Task Audit</h3>
+          <div class="disc-reveal">
+            <p class="disc-body-text">A rigorous mapping of which tasks AI has absorbed, which remain human-critical, and where developmental gaps have silently formed.</p>
+            <div class="disc-output-tag">
+              <div><strong>Output</strong>A structural gap map showing exactly where AI efficiency has created leadership pipeline exposure — and where the rebuild begins.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="discipline">
+        <div class="disc-bg"></div>
+        <div class="disc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <span class="disc-watermark">02</span>
+        <div class="disc-content">
+          <span class="disc-eyebrow">Discipline Two</span>
+          <h3 class="disc-title">Human Advantage Redesign</h3>
+          <div class="disc-reveal">
+            <p class="disc-body-text">A systematic repositioning of human work toward judgment, context, and relational complexity — the capabilities AI cannot replicate and markets will reward.</p>
+            <div class="disc-output-tag">
+              <div><strong>Output</strong>A redesigned role architecture that makes every human position a leadership development position.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="discipline">
+        <div class="disc-bg"></div>
+        <div class="disc-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <span class="disc-watermark">03</span>
+        <div class="disc-content">
+          <span class="disc-eyebrow">Discipline Three</span>
+          <h3 class="disc-title">Apprenticeship Acceleration</h3>
+          <div class="disc-reveal">
+            <p class="disc-body-text">The deliberate reconstruction of knowledge transfer pathways. A structural mechanism that ensures institutional knowledge, judgment, and leadership capacity move forward — not out.</p>
+            <div class="disc-output-tag">
+              <div><strong>Output</strong>A transfer system that operates independent of any single individual.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="discipline">
+        <div class="disc-bg"></div>
+        <div class="disc-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+        </div>
+        <span class="disc-watermark">04</span>
+        <div class="disc-content">
+          <span class="disc-eyebrow">Discipline Four</span>
+          <h3 class="disc-title">Leadership Density Rebuild</h3>
+          <div class="disc-reveal">
+            <p class="disc-body-text">The measurable expansion of leadership depth across the organization — quantified through the AI Fragility Index™ and tracked against competitive benchmarks.</p>
+            <div class="disc-output-tag">
+              <div><strong>Output</strong>A leadership density scorecard your board can read in five minutes and act on in thirty days.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- SPEAKING -->
+<section id="speaking">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="label">Speaking</span>
+      <div class="rule"></div>
+      <h2 class="section-title">Keynotes That Challenge<br><em>AI Orthodoxy</em></h2>
+    </div>
+    <div class="speaking-top fade-up">
+      <div>
+        <p class="speaking-intro">Mindaugas doesn't deliver AI keynotes. He delivers structural arguments — the kind that change how leadership teams think about the decade ahead. Built for boards, C-suites, and global conferences.</p>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="kPrev" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="carousel-btn" id="kNext" aria-label="Next">
+          <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="carousel-outer fade-up">
+      <div class="carousel-track" id="keynoteTrack">
+
+        <!-- CARD 1 -->
+        <div class="keynote-card">
+          <div class="kc-image" style="background-image:url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776205507/gemini-image-2_make_this_man_on_stage_talking_to_crowded_audience_about_ai_strategy_with_casual-1_2_tjma8y.png');background-size:cover;background-position:center center;">
+            <!-- Replace div above with: <img src='your-image.jpg' style='width:100%;height:100%;object-fit:cover;'> -->
+          </div>
+          <div class="kc-overlay"></div>
+          <div class="kc-top">
+            <span class="kc-badge">Flagship</span>
+            <span class="kc-num">01</span>
+          </div>
+          <div class="kc-body">
+            <p class="kc-cat">The Hollow Organization™</p>
+            <h3 class="kc-title">The Hollow Organization™</h3>
+            <p class="kc-desc">Why AI efficiency without workforce architecture redesign is a strategy for short-term gain and long-term fragility — and what the organizations getting it right are doing instead.</p>
+            <a href="#leadmagnet" class="kc-link">Book this keynote &rarr;</a>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="keynote-card">
+          <div class="kc-image" style="background-image:url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776205508/gemini-image-2_make_this_man_at_desk_discussing_with_team_as_a_professional_real_shot-2_1_zfqcoi.png');background-size:cover;background-position:center center;">
+          </div>
+          <div class="kc-overlay"></div>
+          <div class="kc-top">
+            <span class="kc-num">02</span>
+          </div>
+          <div class="kc-body">
+            <p class="kc-cat">Strategy</p>
+            <h3 class="kc-title">The Competitive Advantage Paradox</h3>
+            <p class="kc-desc">The organizations leading in AI adoption today may be building structural disadvantages they won't recognize until it's too late. A structural argument for leadership density as the ultimate competitive moat.</p>
+            <a href="#leadmagnet" class="kc-link">Book this keynote &rarr;</a>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="keynote-card">
+          <div class="kc-image" style="background-image:url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776205506/gemini-image-2_make_this_man_on_stage_talking_to_crowded_audience_about_ai_strategy_with_casual-0_1_icebjt.png');background-size:cover;background-position:center center;">
+          </div>
+          <div class="kc-overlay"></div>
+          <div class="kc-top">
+            <span class="kc-num">03</span>
+          </div>
+          <div class="kc-body">
+            <p class="kc-cat">Workforce Trends</p>
+            <h3 class="kc-title">The Apprenticeship Collapse</h3>
+            <p class="kc-desc">The most consequential workforce trend of the AI era isn't job displacement. It's the quiet destruction of the systems that produce great leaders. What it means. What to do about it.</p>
+            <a href="#leadmagnet" class="kc-link">Book this keynote &rarr;</a>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="keynote-card">
+          <div class="kc-image" style="background-image:url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776205506/gemini-image-2_make_this_man_at_office_1_1_coaching_as_a_professional_real_shot-1_1_ycbh1b.png');background-size:cover;background-position:center center;">
+          </div>
+          <div class="kc-overlay"></div>
+          <div class="kc-top">
+            <span class="kc-num">04</span>
+          </div>
+          <div class="kc-body">
+            <p class="kc-cat">AI Era Architecture</p>
+            <h3 class="kc-title">Elevating the Workforce in the AI Era</h3>
+            <p class="kc-desc">The practical architecture for organizations that want to use AI as a force multiplier for human capability — not a replacement for the judgment and depth it takes to lead.</p>
+            <a href="#leadmagnet" class="kc-link">Book this keynote &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="carousel-dots" id="carouselDots">
+      <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+      <div class="carousel-dot" onclick="goToSlide(1)"></div>
+      <div class="carousel-dot" onclick="goToSlide(2)"></div>
+      <div class="carousel-dot" onclick="goToSlide(3)"></div>
+    </div>
+
+    <div class="speaking-cta fade-up" style="padding-left:var(--gutter);">
+      <a href="#leadmagnet" class="btn-primary">Submit a Speaking Inquiry &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ADVISORY -->
+<section id="advisory">
+  <div class="section-inner">
+    <div class="advisory-layout">
+      <div class="advisory-sticky fade-up">
+        <span class="label">Executive Advisory</span>
+        <div class="rule"></div>
+        <h2 class="section-title" style="max-width:14ch;">For Organizations That Need More Than <em>a Keynote.</em></h2>
+        <p class="advisory-lead">Mindaugas works with a limited number of organizations each year on a direct advisory basis — embedding into the strategic conversation to diagnose, design, and implement workforce architecture changes built for the AI era.</p>
+        <a href="#leadmagnet" class="btn-primary">Request an Executive Briefing &rarr;</a>
+      </div>
+      <div class="fade-up fade-up-d2">
+        <div class="services">
+          <div class="service">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+            </div>
+            <h3>AI Fragility Index™ Assessment</h3>
+            <p>A quantitative diagnostic of where leadership density has declined, where apprenticeship pathways have collapsed, and what the structural risk exposure looks like against competitive benchmarks.</p>
+          </div>
+          <div class="service">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Leadership Density Audit</h3>
+            <p>A comprehensive mapping of leadership depth across the organization — identifying gaps, single points of failure, and structural bottlenecks that AI adoption has accelerated.</p>
+          </div>
+          <div class="service">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h3>90-Day Elevation Workforce™ Roadmap</h3>
+            <p>A prioritized implementation plan for workforce architecture redesign, calibrated to the organization's timeline, competitive context, and leadership objectives.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-layout">
+      <div class="fade-up">
+        <div class="about-photo">
+          <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776202848/Group_1000001018_hnxuyu.png" alt="Mindaugas Maciulis" class="about-photo-img">
+        </div>
+      </div>
+      <div class="fade-up fade-up-d2">
+        <span class="label">About</span>
+        <div class="rule"></div>
+        <h2 class="section-title">Mindaugas <em>Maciulis</em></h2>
+        <p class="about-bio">Mindaugas Maciulis is a Workforce Architect with Burrus Research and the Founder of Strategic AI Advisors. He advises Fortune 500 executives, CHROs, and corporate boards on AI-era workforce architecture and the structural redesign required to build organizations that are both AI-capable and leadership-resilient.<br><br>His work is built on firsthand experience. He led organizations through periods of rapid growth and severe stress — including a business crisis that brought him within one week of payroll failure. That experience, combined with a deep conviction that technology must serve the development of human capability rather than replace it, is the foundation of his intellectual platform.</p>
+      </div>
+    </div>
+    <div class="credentials fade-up">
+      <div class="credentials-track">
+        <div class="cred-item"><span class="cred-dash">✦</span> Founder, Strategic AI Advisors</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Founder, The Elevation Institute™</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Co-author, People First in the AI World</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> The Hollow Organization™ &amp; The Hollow Economy™</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> AI Fragility Index™ &amp; Elevation Workforce™ Model</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Kohler Company &amp; W.F. Whelan</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Michigan State University</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Founder, Strategic AI Advisors</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Founder, The Elevation Institute™</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Co-author, People First in the AI World</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> The Hollow Organization™ &amp; The Hollow Economy™</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> AI Fragility Index™ &amp; Elevation Workforce™ Model</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Kohler Company &amp; W.F. Whelan</div>
+        <div class="cred-item"><span class="cred-dash">✦</span> Michigan State University</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BANNER -->
+<div class="quote-banner-wrap" style="padding-top:clamp(3rem,6vw,5rem);padding-bottom:clamp(3rem,6vw,5rem);">
+  <div class="quote-banner">
+    <div class="quote-banner-bg"></div>
+    <div class="quote-banner-overlay"></div>
+    <div class="quote-banner-content fade-up">
+      <p id="quoteText">"I didn't arrive at this work through <span class="qword teal">research.</span> I arrived through <span class="qword teal">failure</span> — and the realization that the organizations most at risk from AI are the ones that don't yet know they're building a <span class="qword teal">hollow version</span> of themselves."</p>
+      <cite>Mindaugas Maciulis</cite>
+    </div>
+  </div>
+</div>
+
+<!-- LEAD MAGNET -->
+<section id="leadmagnet" style="padding:0;">
+  <div style="background-color:#050D12;background-image:url('https://res.cloudinary.com/dcuswyfur/image/upload/v1776190958/41_ub7qop.png');background-size:cover;background-position:center center;background-repeat:no-repeat;padding:clamp(4rem,8vw,7rem) var(--gutter);position:relative;">
+  <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(5,13,18,0.82) 0%,rgba(5,13,18,0.5) 60%,rgba(5,13,18,0.3) 100%);pointer-events:none;z-index:0;"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="leadmagnet-inner">
+      <div class="fade-up">
+        <span class="lm-tag">Complimentary for Senior Executives</span>
+        <h2 class="lm-h2">The Leadership Density Brief</h2>
+        <p class="lm-sub">A concise executive briefing on the structural forces eroding leadership depth in AI-era organizations — and the architecture required to reverse it.</p>
+        <p class="lm-sub">Designed for C-suite and board-level leaders navigating AI workforce transitions.</p>
+        <p class="lm-note">PDF — Complimentary · No sales sequence. No noise.</p>
+      </div>
+      <div class="fade-up fade-up-d2">
+        <div class="lm-form">
+          <input class="lm-field" type="text" placeholder="Your name">
+          <input class="lm-field" type="email" placeholder="Executive email address">
+          <input class="lm-field" type="text" placeholder="Organization">
+          <input class="lm-field" type="text" placeholder="Title / Role">
+          <button class="btn-white" type="button">Request Executive Briefing &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="#" class="footer-logo">
+        <img src="https://res.cloudinary.com/dcuswyfur/image/upload/v1776201101/mindagaslogo_lvf5fo.png" alt="Mindaugas Maciulis" class="footer-logo-img">
+      </a>
+      <p class="footer-tagline">Workforce Architect · mindaugasmaciulis.com</p>
+    </div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#credibility">About</a>
+      <a href="#problem">The Problem</a>
+      <a href="#solution">The Model</a>
+      <a href="#speaking">Speaking</a>
+      <a href="#advisory">Advisory</a>
+      <a href="#leadmagnet">Contact</a>
+    </nav>
+    <p class="footer-copy">&copy; 2025 Mindaugas Maciulis. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll fill
+  (function(){
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, {passive:true});
+  })();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function toggleAcc(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.acc-trigger.open').forEach(b => {
+      b.classList.remove('open');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      body.classList.add('open');
+    }
+  }
+
+  // ── STATS COUNT-UP ──
+  // ── STATS: count-up + slide-in + drag scroll ──
+  (function() {
+    const cards = Array.from(document.querySelectorAll('.stat-card[data-target]'));
+    const row   = document.getElementById('statsRow');
+    let fired   = false;
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function countUp(el, target, slideDelay) {
+      setTimeout(() => {
+        el.classList.add('counted');
+        const span = el.querySelector('.count');
+        const dur  = 1600;
+        const t0   = performance.now();
+        (function tick(now) {
+          const p = Math.min((now - t0) / dur, 1);
+          span.textContent = Math.round(easeOut(p) * target);
+          if (p < 1) requestAnimationFrame(tick);
+          else span.textContent = target;
+        })(t0);
+      }, slideDelay);
+    }
+
+    function runStats() {
+      if (fired) return;
+      fired = true;
+      cards.forEach((card, i) => countUp(card, parseInt(card.dataset.target), i * 120));
+    }
+
+    // Fire when row scrolls into view
+    new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { runStats(); }
+    }, { threshold: 0.15 }).observe(row);
+
+    // Drag-to-scroll
+    let isDown = false, startX, scrollLeft;
+    row.addEventListener('mousedown',  e => { isDown = true; startX = e.pageX - row.offsetLeft; scrollLeft = row.scrollLeft; });
+    row.addEventListener('mouseleave', ()  => { isDown = false; });
+    row.addEventListener('mouseup',    ()  => { isDown = false; });
+    row.addEventListener('mousemove',  e  => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x    = e.pageX - row.offsetLeft;
+      const walk = (x - startX) * 1.4;
+      row.scrollLeft = scrollLeft - walk;
+    });
+  })();
+
+  // ── QUOTE WORD REVEAL ──
+  (function() {
+    const banner = document.querySelector('.quote-banner');
+    if (!banner) return;
+
+    // Wrap plain text nodes in #quoteText into .qword spans
+    const p = document.getElementById('quoteText');
+    if (p) {
+      p.childNodes.forEach(node => {
+        if (node.nodeType === 3 && node.textContent.trim()) {
+          const words = node.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          words.forEach(w => {
+            if (w.trim()) {
+              const sp = document.createElement('span');
+              sp.className = 'qword';
+              sp.textContent = w;
+              frag.appendChild(sp);
+              frag.appendChild(document.createTextNode(' '));
+            } else {
+              frag.appendChild(document.createTextNode(w));
+            }
+          });
+          node.replaceWith(frag);
+        }
+      });
+    }
+
+    const words = document.querySelectorAll('.qword');
+    const cite  = document.getElementById('quoteCite');
+    let done = false;
+
+    function revealWords() {
+      if (done) return;
+      done = true;
+      words.forEach((w, i) => {
+        setTimeout(() => {
+          w.classList.add('lit');
+          if (i === words.length - 1 && cite) {
+            setTimeout(() => cite.classList.add('lit'), 300);
+          }
+        }, i * 50);
+      });
+    }
+
+    new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) revealWords();
+    }, { threshold: 0.25 }).observe(banner);
+  })();
+
+  // ── CAROUSEL ──
+  (function() {
+    const track = document.getElementById('keynoteTrack');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const cards = document.querySelectorAll('.keynote-card');
+    let current = 0;
+    const gap = 16;
+
+    function getCardWidth() {
+      return cards[0] ? cards[0].offsetWidth + gap : 0;
+    }
+
+    function goToSlide(idx) {
+      current = Math.max(0, Math.min(idx, cards.length - 1));
+      track.style.transform = 'translateX(-' + (current * getCardWidth()) + 'px)';
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    window.goToSlide = goToSlide;
+
+    document.getElementById('kNext').addEventListener('click', () => goToSlide(current + 1));
+    document.getElementById('kPrev').addEventListener('click', () => goToSlide(current - 1));
+
+    // Touch/drag support
+    let startX = 0, isDragging = false;
+    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; isDragging = true; }, {passive:true});
+    track.addEventListener('touchend', e => {
+      if (!isDragging) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) goToSlide(dx < 0 ? current + 1 : current - 1);
+      isDragging = false;
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goToSlide(current + 1);
+      if (e.key === 'ArrowLeft') goToSlide(current - 1);
+    });
+
+    window.addEventListener('resize', () => goToSlide(current));
+  })();
+</script>
+</body>
+</html>
